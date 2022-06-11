@@ -1,7 +1,25 @@
-# Vue 3 + Vite
+### typography 的 editable 时有两个bug
+1. 输入完毕后，按回车键会执行两次 onEnd
+2. 按Esc会执行 onCancel + onEnd
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+大概原因应该是回车键和ESC同时触发了onBlur
+而 https://github.com/vueComponent/ant-design-vue/issues/4227 这个issue给onBlur添加了onEnd
 
-## Recommended IDE Setup
+```js
+    function onBlur() {
+      confirmChange();
+      emit('end');
+    }
+```
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+
+
+
+代码运行：
+```bash
+yarn install
+
+vite
+```
+
+跑起来后看console
